@@ -1,70 +1,108 @@
-# Getting Started with Create React App
+# React-slider-styledcomponents
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Learning how to use styled components and how to implement an Image Slider component in ReactJS.
 
-## Available Scripts
+### What
 
-In the project directory, you can run:
+Implemented a simple interface with a Top Navbar and a Slider Component underneath.
 
-### `npm start`
+### Why
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+I had tried to use styled components a while ago and wasn't very impressed. Saw a couple of videos and decided to give it another go and I am happy I did.
+Used properly styled components can help keeping the code tidy by keeping code and styling all in one place.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Taking Note
 
-### `npm test`
+#### Slider and useEffect()
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+I struggled implementing the timer for the slider.
 
-### `npm run build`
+At first I was just using a cycling function inside a setInterval().
+Then I decided to replace it with a setTimeout() inside a useEffect hook but it was still behaving badly: the images weren't scrolling appropriately wit images skipping or staying on the screen for twice/thrice the amount of time.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Searching for a solution I found out _you need to add useRef as well!_
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+...
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+const [index, setIndex] = useState(0)
+  const [currentIdx, setCurrentIdx] = useState(0)
+  const length = pics.length
+  const timeout = useRef(null)
 
-### `npm run eject`
+  useEffect(() => {
+    const nextPic = () => {
+      setIndex((idx) => (idx >= length - 1 ? 0 : index + 1))
+    }
+    timeout.current = setTimeout(nextPic, 4000)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    return () => {
+      if (timeout.current) {
+        clearTimeout(timeout.current)
+      }
+    }
+  }, [index, length])
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  ...
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### Styled Components
 
-## Learn More
+_You can use React-Router-Doms within Styled-components:_
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+...
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+const NavMenuLink = styled(Link)`
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 1.1px;
+  text-decoration: none;
+  padding-right: 1.5rem;
+`
 
-### Code Splitting
+...
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+<NavMenu>
+  {menuLinks.map((link, index) => {
+    return (
+      <NavMenuLink to={link.address} key={index}>
+        {link.text}
+      </NavMenuLink>
+    )
+  })}
+</NavMenu>
 
-### Analyzing the Bundle Size
+...
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+_You can use SCSS within styled components:_
 
-### Making a Progressive Web App
+```
+  const HamburgerWrapper = styled.div`
+  color: white;
+  font-size: 1.5rem;
+  padding-right: 1rem;
+  display: none;
+  cursor: pointer;
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+  @media screen and (max-width: 768px) {
+    display: block;
+  }
+`
 
-### Advanced Configuration
+const StyledHamburgerMenu = styled(FaBars)`
+  transition: all, 0.3s;
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+  &:hover {
+    transform: scale(1.5);
+  }
+`
+```
 
-### Deployment
+### Thanks
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+To Brian Design.
+Video @ https://www.youtube.com/watch?v=sKs9FiAHSN4

@@ -66,7 +66,7 @@ const StyledHamburgerMenu = styled(FaBars)`
 function Navbar() {
   return (
     <Nav>
-      <Logo to="#">MATT</Logo>
+      <Logo to="/aboutCompany">MATT</Logo>
       <NavMenu>
         {menuLinks.map((link, index) => {
           return (
