@@ -1,15 +1,19 @@
 import React from 'react'
-import styled, { css } from 'styled-components/macro'
+import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { menuLinks } from '../data/menuLinks'
 import { FaBars } from 'react-icons/fa'
 
 const Nav = styled.nav`
+  position: fixed;
+  top: 0;
+  width: 100vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 80px;
-  background-color: teal;
+  /* background-color: teal; */
+  z-index: 100;
 `
 
 const Logo = styled(Link)`
@@ -23,9 +27,9 @@ const Logo = styled(Link)`
 const NavMenu = styled.div`
   display: flex;
   width: 40%;
-  justify-content: space-evenly;
+  justify-content: start;
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 768px) {
     display: none;
   }
 `
@@ -36,6 +40,7 @@ const NavMenuLink = styled(Link)`
   font-weight: 500;
   letter-spacing: 1.1px;
   text-decoration: none;
+  padding-right: 1.5rem;
 `
 
 const HamburgerWrapper = styled.div`
@@ -45,7 +50,7 @@ const HamburgerWrapper = styled.div`
   display: none;
   cursor: pointer;
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 768px) {
     display: block;
   }
 `

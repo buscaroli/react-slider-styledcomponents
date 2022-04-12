@@ -11,6 +11,16 @@ const GlobalStyle = createGlobalStyle`
 html, body {
   overflow-x: hidden;
 }
+
+body {
+  background-color: black;
+  margin: 0 auto;
+  width: 80vw;
+
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+  }
+}
 `
 
 export default GlobalStyle
